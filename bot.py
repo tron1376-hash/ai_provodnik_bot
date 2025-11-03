@@ -11,6 +11,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
+logger = logging.getLogger(__name__)
 
 # Загрузка переменных окружения
 load_dotenv()
@@ -56,10 +57,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Выберите нужный раздел или просто задайте вопрос:"
     )
     
-    if update.message:
-        await update.message.reply_text(welcome_message, reply_markup=reply_markup)
-    else:
-        await update.callback_query.message.reply_text(welcome_message, reply_markup=reply_markup)
+    await chat.reply_text(welcome_message, reply_markup=reply_markup)
 
 
 
