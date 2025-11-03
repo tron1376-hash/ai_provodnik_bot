@@ -26,6 +26,14 @@ MENU_URL = os.getenv("MENU_URL")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработчик команды /start - главное меню"""
+    
+    # Отправка логотипа
+    try:
+        with open(BRAND_IMAGE_PATH, 'rb') as photo:
+            await update.message.reply_photo(photo)
+    except Exception as e:
+        logger.error(f"Ошибка отправки картинки: {e}")
+    
     keyboard = [
         [InlineKeyboardButton("🚂 Мой поезд", callback_data='my_train')],
         [InlineKeyboardButton("🍜 Меню у проводника", callback_data='menu')],
@@ -52,6 +60,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(welcome_message, reply_markup=reply_markup)
     else:
         await update.callback_query.message.reply_text(welcome_message, reply_markup=reply_markup)
+
+
+
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
